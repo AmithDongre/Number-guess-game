@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Number Guessing Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="game-container">
+    <h2>🎲 Number Guessing Game</h2>
+
+    {% if best_score is not none %}
+        <p class="best-score">🏆 Best Score: {{ best_score }} attempts</p>
+    {% endif %}
+
+    <!-- Difficulty Explanation -->
+    {% if max_num is none %}
+        <div class="difficulty-info">
+            <p><strong>Easy:</strong> 1–10 (5 attempts)</p>
+            <p><strong>Medium:</strong> 1–50 (7 attempts)</p>
+            <p><strong>Hard:</strong> 1–100 (10 attempts)</p>
+        </div>
+
+        <form method="POST" class="level-form">
+            <button name="level" value="easy">Easy</button>
+            <button name="level" value="medium">Medium</button>
+            <button name="level" value="hard">Hard</button>
+        </form>
+    {% endif %}
+
+    {% if max_num %}
+        <p class="range">Guess between 1 and {{ max_num }}</p>
+    {% endif %}
+
+    {% if max_num and not game_over %}
+        <form method="POST" class="guess-form">
+            <input type="number" name="guess" required autofocus>
+            <button type="submit">Guess</button>
+        </form>
+    {% endif %}
+
+    {% if attempts is not none and not game_over %}
+        <p class="attempts">Attempts left: {{ attempts }}</p>
+    {% endif %}
+
+    <!-- Feedback -->
+    {% if game_over %}
+        <div class="end-screen {% if won %}win bounce{% else %}lose shake{% endif %}">
+            <p>{{ message }}</p>
+            <form method="POST">
+                <button name="restart" class="restart-btn">Restart Game</button>
+            </form>
+        </div>
+    {% else %}
+        <p class="message pulse">{{ message }}</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

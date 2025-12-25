@@ -48,10 +48,9 @@ Number-guess-game/
 
 ## ▶️ Run Locally
 
---bash
-
+`--bash
 pip install -r requirements.txt
-python app.py
+python app.py`
 
 ---
 
